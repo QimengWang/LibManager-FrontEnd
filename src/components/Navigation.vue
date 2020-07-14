@@ -24,7 +24,7 @@ export default {
 <style scoped>
 .navBox {
   height: 100%;
-  background-color: #1b66e6;
+  background-color: #2c3e50;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -36,7 +36,7 @@ span {
 }
 
 .infoBox {
-  width: 12%;
+  width: 13%;
   height: 100%;
   margin-right: 1.7%;
   display: flex;

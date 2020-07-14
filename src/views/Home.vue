@@ -34,8 +34,9 @@ export default {
 }
 
 .mainBox {
-  margin: 5%;
-  width: 90%;
+  margin: 5% 10%;
+  width: 80%;
+  min-height: 66%;
   background-color: white;
   display: flex;
 }
