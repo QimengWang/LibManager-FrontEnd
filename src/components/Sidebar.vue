@@ -1,7 +1,7 @@
 <template>
   <div>
     <Menu active-name="1" theme="light" width="auto">
-      <router-link to="/Test">
+      <router-link to="/test">
         <MenuItem name="1">
           <Icon type="ios-navigate"></Icon>
           今日推荐

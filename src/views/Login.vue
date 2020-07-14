@@ -41,7 +41,7 @@ export default {
   methods: {
     login() {
       // alert("功能暂未开发！");
-      window.location.href = 'http://localhost:8080/home';
+      window.location.href = 'http://localhost:8080/test';
     }
   }
 };
