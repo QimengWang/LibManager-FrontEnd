@@ -1,0 +1,46 @@
+<template>
+  <div class="navBox">
+    <span style="margin-left: 1.7%; font-weight: bold; font-size: 1.15rem">
+      图 书 馆 管 理 系 统
+    </span>
+    <div class="infoBox">
+      <span>{{ name }}, 欢迎！</span>
+      <span>退出</span>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Navigation",
+  data() {
+    return {
+      name: "王琦梦"
+    };
+  }
+};
+</script>
+
+<style scoped>
+.navBox {
+  height: 100%;
+  background-color: #1b66e6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+span {
+  color: white;
+  font-size: 0.95rem;
+}
+
+.infoBox {
+  width: 12%;
+  height: 100%;
+  margin-right: 1.7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+</style>

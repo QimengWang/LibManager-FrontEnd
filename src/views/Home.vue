@@ -1,18 +1,51 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="homeBox">
+    <navigation class="navBox"></navigation>
+    <div class="mainBox">
+      <sidebar class="sideBox"></sidebar>
+      <router-view class="contentBox" />
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+import navigation from "../components/Navigation";
+import sidebar from "../components/Sidebar";
 export default {
   name: "Home",
+  data() {
+    return {};
+  },
   components: {
-    HelloWorld
+    navigation,
+    sidebar
   }
 };
 </script>
+
+<style scoped lang="less">
+.homeBox {
+  height: 100%;
+  width: 100%;
+}
+
+.navBox {
+  height: 11%;
+}
+
+.mainBox {
+  margin: 5%;
+  width: 90%;
+  background-color: white;
+  display: flex;
+}
+
+.sideBox {
+  width: 20%;
+  padding: 3% 0;
+}
+
+.contentBox {
+  margin: 3%;
+}
+</style>
