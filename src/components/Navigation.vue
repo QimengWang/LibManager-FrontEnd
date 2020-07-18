@@ -5,7 +5,7 @@
     </span>
     <div class="infoBox">
       <span>{{ name }}, 欢迎！</span>
-      <span>退出</span>
+      <span @click="loginOut">退出</span>
     </div>
   </div>
 </template>
@@ -17,6 +17,11 @@ export default {
     return {
       name: "王琦梦"
     };
+  },
+  methods: {
+    loginOut() {
+      alert("确定退出？");
+    }
   }
 };
 </script>
@@ -43,4 +48,8 @@ span {
   align-items: center;
   justify-content: space-between;
 }
+
+/*span:hover {*/
+/*  color: lightgrey;*/
+/*}*/
 </style>

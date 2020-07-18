@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login";
-import Test from "../components/Test";
+import BookSearching from "../components/bookSearching";
 
 Vue.use(VueRouter);
 
@@ -14,13 +14,13 @@ const routes = [
   },
   {
     path: "/home",
-    name: "Home",
+    name: "home",
     component: Home,
     children: [
       {
-        path: "/test",
-        name: "Test",
-        component: Test
+        path: "/bookSearching",
+        name: "bookSearching",
+        component: BookSearching
       }
     ]
   }
