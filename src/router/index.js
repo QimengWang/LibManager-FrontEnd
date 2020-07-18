@@ -3,8 +3,15 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login";
 import BookSearching from "../components/bookSearching";
+import SeatOrdering from "../components/seatOrdering";
 
 Vue.use(VueRouter);
+
+//防止多次点击menuitem报错
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+};
 
 const routes = [
   {
@@ -21,6 +28,11 @@ const routes = [
         path: "/bookSearching",
         name: "bookSearching",
         component: BookSearching
+      },
+      {
+        path: "/seatOrdering",
+        name: "seatOrdering",
+        component: SeatOrdering
       }
     ]
   }

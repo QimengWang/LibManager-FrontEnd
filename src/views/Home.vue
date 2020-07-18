@@ -42,7 +42,7 @@ export default {
 }
 
 .sideBox {
-  width: 20%;
+  width: 30%;
   padding: 3% 0;
 }
 

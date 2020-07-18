@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Menu theme="light" width="auto" active-name="0" accordion="">
-      <MenuItem name="0">
+    <Menu theme="light" width="auto" active-name="0" accordion>
+      <MenuItem name="0" to="/bookSearching">
         <Icon type="ios-paper-plane" />
         图书检索
       </MenuItem>
@@ -18,7 +18,7 @@
           <Icon type="md-clock" />
           预约管理
         </template>
-        <MenuItem name="2-1">在线预约</MenuItem>
+        <MenuItem name="2" to="/seatOrdering">在线预约</MenuItem>
         <MenuItem name="2-2">我的预约</MenuItem>
       </Submenu>
       <Submenu name="3">
@@ -35,6 +35,11 @@
 
 <script>
 export default {
-  name: "Sidebar"
+  name: "Sidebar",
+  methods: {
+    directTo(name) {
+      console.log(name);
+    }
+  }
 };
 </script>
