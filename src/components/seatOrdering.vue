@@ -16,7 +16,7 @@
 <script>
 import selectSeat from "./selectSeat";
 import confirmTime from "./confirmTime";
-import completeOrder from './completeOrder';
+import completeOrder from "./completeOrder";
 export default {
   name: "seatOrdering",
   components: {
