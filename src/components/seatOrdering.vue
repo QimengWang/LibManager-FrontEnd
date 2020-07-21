@@ -8,7 +8,7 @@
       </Steps>
     </div>
     <select-seat v-if="step === 0" @nextStep="next"></select-seat>
-    <confirm-time v-if="step === 1" @finalStep="next"></confirm-time>
+    <confirm-time v-if="step === 1" @nextStep="next"></confirm-time>
     <complete-order v-if="step === 2"></complete-order>
   </div>
 </template>
