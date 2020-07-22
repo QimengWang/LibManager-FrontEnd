@@ -147,9 +147,6 @@ export default {
     btnClick2(){
         console.log('btnClick2');
     },
-    // selectRow(currentRow){
-    //     console.log(currentRow)
-    // },
     selectRow(){
       console.log(this.$refs.selection.getSelection());
     }
