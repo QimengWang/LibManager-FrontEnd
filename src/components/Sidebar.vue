@@ -5,14 +5,10 @@
         <Icon type="ios-paper-plane" />
         图书检索
       </MenuItem>
-      <Submenu name="1">
-        <template slot="title">
-          <Icon type="ios-bookmarks" />
-          借阅管理
-        </template>
-        <MenuItem name="1-1">我的借阅</MenuItem>
-        <MenuItem name="1-2">我的归还</MenuItem>
-      </Submenu>
+      <MenuItem name="1" to="borrowManagement">
+        <Icon type="ios-bookmarks" />
+        借阅管理
+      </MenuItem>
       <Submenu name="2">
         <template slot="title">
           <Icon type="md-clock" />

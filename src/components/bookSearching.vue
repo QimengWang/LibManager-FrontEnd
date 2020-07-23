@@ -25,6 +25,7 @@
           border
           ref="selection"
           stripe
+          max-height="400"
           :columns="columns1"
           :data="data1"
           @on-select="selectRow"
@@ -150,7 +151,7 @@ export default {
           pry: "2020.1",
           total: 5,
           num: 0
-        }
+        },
       ]
     };
   },

@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Login from "../views/Login";
 import BookSearching from "../components/bookSearching";
 import SeatOrdering from "../components/seatOrdering";
+import borrowManagement from "../components/borrowManagement";
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,11 @@ const routes = [
         path: "/seatOrdering",
         name: "seatOrdering",
         component: SeatOrdering
+      },
+      {
+        path:'/borrowManagement',
+        name:'borrowManagement',
+        component:borrowManagement
       }
     ]
   }
