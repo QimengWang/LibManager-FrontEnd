@@ -15,5 +15,6 @@
   color: #2c3e50;
   height: 100%;
   background-color: whitesmoke;
+  overflow-y: scroll;
 }
 </style>
