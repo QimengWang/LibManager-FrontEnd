@@ -1,13 +1,15 @@
 <template>
   <div class="mainBox">
     <div class="selectBox">
-      <h2 class="float-display">请选择：</h2>
+      <span style="display: inline-block; font-size: 1rem; font-weight: bold">
+        请选择：
+      </span>
       <Cascader
         :data="data"
         v-model="area"
-        class="float-display"
         trigger="hover"
         @on-change="selectArea"
+        style="width: 30%; display: inline-block"
       ></Cascader>
     </div>
     <div class="seatBox">
@@ -35,11 +37,10 @@
       </table>
     </div>
     <div class="remainBox">
-      <h3 class="float-display" style="float: left">剩余空位：{{ remain }}</h3>
+      <h3 style="display: inline-block; float: left">剩余空位：{{ remain }}</h3>
       <Button
         type="primary"
-        class="float-display"
-        style="float: right"
+        style="display: inline-block; float: right"
         @click="next"
       >
         下一步
@@ -166,12 +167,8 @@ export default {
 }
 
 .selectBox {
-  margin: 2% 0;
-  width: 50%;
-}
-
-.float-display {
-  display: inline-block;
+  width: 100%;
+  margin: 3% 0;
 }
 
 .seatBox {
