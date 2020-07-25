@@ -1,7 +1,9 @@
 <template>
   <div class="mainBox">
     <div class="selectBox">
-      <span style="display: inline-block; font-size: 1rem; font-weight: bold">
+      <span
+        style="display: inline-block; font-size: 1rem; font-weight: bold; float: left"
+      >
         请选择：
       </span>
       <Cascader
@@ -9,8 +11,10 @@
         v-model="area"
         trigger="hover"
         @on-change="selectArea"
-        style="width: 30%; display: inline-block"
+        style="width: 30%; display: inline-block; float: left"
       ></Cascader>
+      <br>
+      <br>
     </div>
     <div class="seatBox">
       <table>
@@ -30,7 +34,12 @@
                 @click="selectSeat(r, c)"
                 alt="pic"
               />
-              <img v-else src="../assets/unavailable.png" alt="pic" />
+              <img
+                v-else-if="isAvailable[location(r, c)] === false"
+                src="../assets/unavailable.png"
+                alt="pic"
+              />
+              <img v-else src="../assets/select.png" alt="pic" />
             </td>
           </tr>
         </tbody>
@@ -42,6 +51,7 @@
         type="primary"
         style="display: inline-block; float: right"
         @click="next"
+        :disabled="!isSelected"
       >
         下一步
       </Button>
@@ -52,10 +62,14 @@
 <script>
 export default {
   name: "selectSeat",
+  props: {
+    isSelectedSeat: Boolean,
+    selectedSeat: Number
+  },
   data() {
     return {
-      isSelected: false, // 是否进行了选座
-      selection: -1, // 选择的座位号
+      isSelected: this.isSelectedSeat, // 是否进行了选座
+      selection: this.selectedSeat, // 选择的座位号
       row: [1, 2, 3, 4],
       col: [1, 2, 3, 4, 5],
       isAvailable: [
@@ -76,6 +90,8 @@ export default {
         true,
         false,
         true,
+        true,
+        false,
         true
       ],
       area: ["firstFloor", "A"],
@@ -154,6 +170,12 @@ export default {
       }
       return n;
     }
+  },
+  mounted() {
+    if(this.$parent.selectedSeat !== -1) {
+      const d = this.$parent.selectedSeat;
+      document.getElementsByTagName("img")[d].src = require("../assets/select.png");
+    }
   }
 };
 </script>
@@ -162,8 +184,8 @@ export default {
 .mainBox {
   height: 100%;
   width: 100%;
-  flex-direction: column;
-  align-items: flex-start;
+  /*flex-direction: column;*/
+  /*align-items: flex-start;*/
 }
 
 .selectBox {
