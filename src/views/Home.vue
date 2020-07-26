@@ -48,5 +48,6 @@ export default {
 
 .contentBox {
   margin: 3%;
+  width: 100%;
 }
 </style>

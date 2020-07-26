@@ -77,9 +77,7 @@ export default {
 
 <style scoped>
 .mainBox {
-  width: 100%;
   flex-direction: column;
-  /*justify-content: center;*/
 }
 
 .stepBox {

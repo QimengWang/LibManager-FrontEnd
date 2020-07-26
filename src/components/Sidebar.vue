@@ -15,7 +15,7 @@
           预约管理
         </template>
         <MenuItem name="2" to="/seatOrdering">在线预约</MenuItem>
-        <MenuItem name="2-2">我的预约</MenuItem>
+        <MenuItem name="2-2" to="/myOrder">我的预约</MenuItem>
       </Submenu>
       <Submenu name="3">
         <template slot="title">
@@ -31,11 +31,6 @@
 
 <script>
 export default {
-  name: "Sidebar",
-  methods: {
-    directTo(name) {
-      console.log(name);
-    }
-  }
+  name: "Sidebar"
 };
 </script>

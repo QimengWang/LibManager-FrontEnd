@@ -13,8 +13,8 @@
         @on-change="selectArea"
         style="width: 30%; display: inline-block; float: left"
       ></Cascader>
-      <br>
-      <br>
+      <br />
+      <br />
     </div>
     <div class="seatBox">
       <table>
@@ -172,9 +172,11 @@ export default {
     }
   },
   mounted() {
-    if(this.$parent.selectedSeat !== -1) {
+    if (this.$parent.selectedSeat !== -1) {
       const d = this.$parent.selectedSeat;
-      document.getElementsByTagName("img")[d].src = require("../assets/select.png");
+      document.getElementsByTagName("img")[
+        d
+      ].src = require("../assets/select.png");
     }
   }
 };
@@ -182,10 +184,6 @@ export default {
 
 <style scoped>
 .mainBox {
-  height: 100%;
-  width: 100%;
-  /*flex-direction: column;*/
-  /*align-items: flex-start;*/
 }
 
 .selectBox {
