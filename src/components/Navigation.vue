@@ -21,6 +21,7 @@ export default {
   methods: {
     loginOut() {
       alert("确定退出？");
+      window.open('http://localhost:8090','_self');
     }
   }
 };

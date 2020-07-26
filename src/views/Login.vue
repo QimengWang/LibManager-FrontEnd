@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { userLogin } from "../api/api";
 export default {
   name: "Login",
   data() {
@@ -35,13 +36,37 @@ export default {
         id: "",
         pwd: ""
       },
-      status: "user"
+      status: ""
     };
   },
   methods: {
-    login() {
-      // alert("功能暂未开发！");
-      window.location.href = 'http://localhost:8090/bookSearching';
+    login: async function() {
+      console.log(this.status);
+      if (this.user.id === "" || this.user.pwd === "") {
+        this.$Notice.error({
+          title: "账号或密码不能为空！",
+          duration: 2
+        });
+      } else {
+        let flag = (await userLogin(this.user, this.status)).data;
+        if (flag.res === 0) {
+          window.location.href = "http://localhost:8090/bookSearching";
+        }
+        if (flag.res === 1) {
+          console.log(flag.msg);
+          this.$Notice.error({
+            title: flag.msg,
+            duration: 2
+          });
+        }
+        if (flag.res === 2) {
+          console.log(flag.msg);
+          this.$Notice.error({
+            title: flag.msg,
+            duration: 2
+          });
+        }
+      }
     }
   }
 };
