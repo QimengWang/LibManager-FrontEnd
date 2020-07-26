@@ -9,12 +9,8 @@
       <Button style="float: left" type="primary" @click="previous"
         >上一步</Button
       >
-<!--      :disabled="!isSelected"-->
-      <Button
-        style="float: right"
-        type="primary"
-        @click="next"
-      >
+      <!--      :disabled="!isSelected"-->
+      <Button style="float: right" type="primary" @click="next">
         下一步
       </Button>
     </div>

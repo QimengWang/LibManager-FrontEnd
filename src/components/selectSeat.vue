@@ -2,7 +2,7 @@
   <div class="mainBox">
     <div class="selectBox">
       <span
-        style="display: inline-block; font-size: 1rem; font-weight: bold; float: left"
+        style="display: block; font-size: 1rem; font-weight: bold"
       >
         请选择：
       </span>
@@ -11,10 +11,8 @@
         v-model="area"
         trigger="hover"
         @on-change="selectArea"
-        style="width: 30%; display: inline-block; float: left"
+        style="width: 30%"
       ></Cascader>
-      <br />
-      <br />
     </div>
     <div class="seatBox">
       <table>
@@ -189,6 +187,8 @@ export default {
 .selectBox {
   width: 100%;
   margin: 3% 0;
+  display: flex;
+  flex-direction: row;
 }
 
 .seatBox {
