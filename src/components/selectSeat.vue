@@ -1,9 +1,7 @@
 <template>
   <div class="mainBox">
     <div class="selectBox">
-      <span
-        style="display: block; font-size: 1rem; font-weight: bold"
-      >
+      <span style="display: block; font-size: 1rem; font-weight: bold">
         请选择：
       </span>
       <Cascader

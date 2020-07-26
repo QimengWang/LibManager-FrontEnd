@@ -13,7 +13,9 @@
           <strong>{{ row.name }}</strong>
         </template>
         <template slot-scope="{ row, index }" slot="action">
-          <Button type="primary" size="small" @click="remove(index)">Delete</Button>
+          <Button type="primary" size="small" @click="remove(index)">
+            Delete
+          </Button>
         </template>
       </Table>
     </div>
