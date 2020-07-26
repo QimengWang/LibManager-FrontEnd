@@ -21,18 +21,17 @@
     </div>
     <div v-show="data1.length !== 0">
       <div class="book_table">
-        <Table
-          border
-          ref="selection"
-          stripe
-          max-height="400"
-          :columns="columns1"
-          :data="data1"
-          @on-select="selectRow"
-        ></Table>
-      </div>
-      <div>
-        <Button type="primary" @click="btnClick2">借阅</Button>
+        <Table max-height="400" :columns="columns1" :data="data1">
+          <template slot-scope="{ row }" slot="action">
+            <Button
+              type="primary"
+              size="small"
+              style="margin-right: 5px"
+              @click="borrowBook(row)"
+              >借阅</Button
+            >
+          </template>
+        </Table>
       </div>
     </div>
   </div>
@@ -60,20 +59,15 @@ export default {
       ],
       columns1: [
         {
-          type: "selection",
-          width: 60,
-          align: "center"
-        },
-        {
           title: "编号",
           key: "id",
-          tooltip: "50",
+          tooltip: true,
           align: "center"
         },
         {
           title: "ISBN",
           key: "isbn",
-          tooltip: "50",
+          tooltip: true,
           align: "center"
         },
         {
@@ -90,7 +84,7 @@ export default {
         {
           title: "出版社",
           key: "press",
-          tooltip: "150",
+          tooltip: true,
           align: "center"
         },
         {
@@ -109,6 +103,11 @@ export default {
           key: "num",
           align: "center",
           width: 75
+        },
+        {
+          title: "操作",
+          slot: "action",
+          align: "center"
         }
       ],
       data1: [
@@ -151,7 +150,7 @@ export default {
           pry: "2020.1",
           total: 5,
           num: 0
-        },
+        }
       ]
     };
   },
@@ -162,8 +161,8 @@ export default {
     btnClick2() {
       console.log("btnClick2");
     },
-    selectRow() {
-      console.log(this.$refs.selection.getSelection());
+    borrowBook(row) {
+      console.log(row.id);
     }
   }
 };
