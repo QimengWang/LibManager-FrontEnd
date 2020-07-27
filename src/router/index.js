@@ -6,6 +6,7 @@ import BookSearching from "../components/bookSearching";
 import SeatOrdering from "../components/seatOrdering";
 import borrowManagement from "../components/borrowManagement";
 import myOrder from "../components/myOrder";
+import bookStatistics from "../components/bookStatistics";
 
 Vue.use(VueRouter);
 
@@ -45,6 +46,11 @@ const routes = [
         path: "/myOrder",
         name: "myOrder",
         component: myOrder
+      },
+      {
+        path: "/bookStatistics",
+        name: "bookStatistics",
+        component: bookStatistics
       }
     ]
   }
