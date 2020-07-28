@@ -22,7 +22,7 @@
           <Icon type="ios-stats" />
           数据统计
         </template>
-        <MenuItem name="3-1">借阅统计</MenuItem>
+        <MenuItem name="3-1" to="bookStatistics">借阅统计</MenuItem>
         <MenuItem name="3-2">预约统计</MenuItem>
       </Submenu>
     </Menu>

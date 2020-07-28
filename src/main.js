@@ -6,6 +6,11 @@ import store from "./store";
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 
+//全局引入echarts
+import echarts from "echarts";
+Vue.prototype.echarts = echarts
+Vue.use(echarts);
+
 Vue.use(iView);
 
 Vue.config.productionTip = false;
