@@ -7,6 +7,7 @@ import SeatOrdering from "../components/seatOrdering";
 import borrowManagement from "../components/borrowManagement";
 import myOrder from "../components/myOrder";
 import bookStatistics from "../components/bookStatistics";
+import personInfo from "../components/personInfo";
 
 Vue.use(VueRouter);
 
@@ -53,6 +54,11 @@ const routes = [
         component: bookStatistics
       }
     ]
+  },
+  {
+    path:"/personInfo",
+    name: "personInfo",
+    component:personInfo
   }
 ];
 
