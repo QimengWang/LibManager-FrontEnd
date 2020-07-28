@@ -50,6 +50,10 @@ export default {
       } else {
         let flag = (await userLogin(this.user, this.status)).data;
         if (flag.res === 0) {
+          this.$Notice.success({
+            title: flag.msg,
+            duration: 2
+          });
           window.location.href = "http://localhost:8090/bookSearching";
         }
         if (flag.res === 1) {
