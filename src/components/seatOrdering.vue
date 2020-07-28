@@ -11,8 +11,10 @@
       ref="seat"
       :is-selected-seat="isSelectedSeat"
       :selected-seat="selectedSeat"
-      v-if="step === 0"
+      :selected-area="selectedArea"
+      v-show="step === 0"
       @nextStep="next"
+      @clear="reset"
     ></select-seat>
     <confirm-time
       ref="time"
@@ -22,9 +24,6 @@
       @nextStep="next"
     ></confirm-time>
     <complete-order v-if="step === 2" @nextStep="next"></complete-order>
-    <div class="finalBox">
-      <h2 v-if="step === 3">恭喜您已完成预约！</h2>
-    </div>
   </div>
 </template>
 
@@ -37,9 +36,10 @@ export default {
   data() {
     return {
       step: 0,
-      selectedSeat: -1,
-      selectedTime: [8, 22],
+      selectedArea: [], // 选择的区域
+      selectedSeat: -1, // 选择的座位号
       isSelectedSeat: false,
+      selectedTime: [8, 22], // 选择的时间
       isSelectedTime: false,
       isConfirmed: false
     };
@@ -56,20 +56,25 @@ export default {
         // 当在子组件“选择座位”中点击了“下一步”时
         this.selectedSeat = this.$refs.seat.selection;
         this.isSelectedSeat = true;
+        this.selectedArea = this.$refs.seat.area;
+        console.log("选择的区域：" + this.selectedArea);
+        console.log("选择的座位：" + this.selectedSeat);
       }
       if (val === 0) {
         // 当在子组件“确定时间”中点击了“上一步”时
-        console.log(this.selectedSeat);
-        // document.getElementsByTagName("img")[this.selectedSeat].src = require("../assets/select.png");
+        // console.log("选择的座位：" + this.$refs.seat.selection);
+        // console.log("选择的区域：" + this.$refs.seat.area);
       }
       if (val === 2) {
         // 当在子组件“确定时间”中点击了“下一步”时
         this.selecetdTime = [10, 18];
-        console.log(this.selecetdTime);
+        console.log("预约的时间为：" + this.selecetdTime);
       }
-      if (val === 3) {
-        // 用户提交了请求，此时可向后台发起请求
-      }
+    },
+
+    reset() {
+      this.selectedSeat = -1;
+      this.isSelectedSeat = false;
     }
   }
 };
@@ -82,9 +87,5 @@ export default {
 
 .stepBox {
   width: 100%;
-}
-
-.finalBox {
-  margin: auto 0;
 }
 </style>

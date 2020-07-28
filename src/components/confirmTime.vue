@@ -1,6 +1,8 @@
 <template>
   <div class="mainBox">
-    <span style="margin-top: 3%">您选择了： {{ selection + 1 }} 号座位</span>
+    <span style="margin-top: 3%">
+      您选择了：{{ area[0] }} 楼 {{ area[1] }} 区 {{ selection + 1 }} 号座位
+    </span>
     <div class="selectBox">
       <span>请选择预约时间：</span>
       <Slider v-model="time" range></Slider>
@@ -26,6 +28,7 @@ export default {
   },
   data() {
     return {
+      area: this.$parent.selectedArea,
       selection: this.$parent.selectedSeat,
       time: this.selectedTime,
       isSelected: this.isSelectedTime

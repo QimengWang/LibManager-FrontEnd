@@ -56,11 +56,14 @@
 </template>
 
 <script>
+import { getAreas, getSeats } from "../api/api";
+
 export default {
   name: "selectSeat",
   props: {
     isSelectedSeat: Boolean,
-    selectedSeat: Number
+    selectedSeat: Number,
+    selectedArea: Array
   },
   data() {
     return {
@@ -68,73 +71,70 @@ export default {
       selection: this.selectedSeat, // 选择的座位号
       row: [1, 2, 3, 4],
       col: [1, 2, 3, 4, 5],
-      isAvailable: [
-        false,
-        true,
-        false,
-        true,
-        false,
-        true,
-        false,
-        false,
-        true,
-        true,
-        true,
-        true,
-        true,
-        false,
-        true,
-        false,
-        true,
-        true,
-        false,
-        true
-      ],
-      area: ["firstFloor", "A"],
-      data: [
-        {
-          value: "firstFloor",
-          label: "一楼",
-          children: [
-            {
-              value: "A",
-              label: "A区"
-            },
-            {
-              value: "B",
-              label: "B区"
-            }
-          ]
-        },
-        {
-          value: "secondFloor",
-          label: "二楼",
-          children: [
-            {
-              value: "A",
-              label: "A区"
-            },
-            {
-              value: "B",
-              label: "B区"
-            },
-            {
-              value: "C",
-              label: "C区"
-            }
-          ]
-        }
-      ]
+      isAvailable: [],
+      area: this.selectedArea,
+      data: []
     };
   },
   methods: {
-    selectArea(value) {
-      console.log(value);
+    async setAreas() {
+      const d = (await getAreas()).data;
+
+      // 转换数据
+      let info = [];
+      let i = 0; // i为数组info的下标
+      let k = 0; // k为数组d的下标
+      do {
+        info[i] = {};
+        info[i].value = d[k].floor;
+        info[i].label = d[k].floor + "楼";
+        info[i].children = [];
+        for (let j = 0; j < d.length; j++) {
+          info[i].children[j] = {};
+          info[i].children[j].value = d[k].area;
+          info[i].children[j].label = d[k].area + "区";
+          if (k < d.length - 1 && d[k].floor === d[k + 1].floor) {
+            k++;
+          } else {
+            break;
+          }
+        }
+        i++;
+        k++;
+      } while (k < d.length);
+
+      this.data = info;
+      // 设置默认area
+      if (this.isSelectedSeat === false) {
+        this.area[0] = info[0].value;
+        this.area[1] = info[0].children[0].value;
+      }
     },
+
+    selectArea() {
+      const d = this.selection;
+      document.getElementsByTagName("img")[
+        d
+      ].src = require("../assets/available.png");
+      this.isSelected = false;
+      this.selection = -1;
+      this.$emit("clear");
+      // console.log("选择的座位：" + this.selection);
+      // console.log("选择的区域：" + this.isSelected);
+      this.setSeats();
+    },
+
+    async setSeats() {
+      const d = (await getSeats(this.area)).data;
+
+      if (d.res === 0) {
+        this.isAvailable = d.isAvailable;
+      }
+    },
+
     selectSeat(r, c) {
       const d = (r - 1) * this.col.length + c - 1;
       let resource = document.getElementsByTagName("img")[d];
-      // console.log(resource.src);
       if (!this.isSelected) {
         // 未选择过座位
         this.selection = d;
@@ -145,13 +145,16 @@ export default {
         resource.src = require("../assets/available.png");
         this.isSelected = false; // 未选座
         this.selection = -1;
+        this.$emit("clear");
       } else {
         alert("不可重复选座，请取消后已选择座位后再次选座！");
       }
     },
+
     location(r, c) {
       return (r - 1) * this.col.length + c - 1; // 找到已经被预定的座位在isAvailable数组中的位置
     },
+
     next() {
       this.$emit("nextStep", 1);
     }
@@ -167,14 +170,14 @@ export default {
       return n;
     }
   },
-  mounted() {
-    if (this.$parent.selectedSeat !== -1) {
-      const d = this.$parent.selectedSeat;
-      document.getElementsByTagName("img")[
-        d
-      ].src = require("../assets/select.png");
+  created() {
+    for (let i = 0; i < 20; i++) {
+      this.isAvailable[i] = true;
     }
-  }
+    this.setAreas();
+    this.setSeats();
+  },
+  mounted() {}
 };
 </script>
 
