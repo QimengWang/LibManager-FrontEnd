@@ -67,7 +67,7 @@ export default {
       }
       if (val === 2) {
         // 当在子组件“确定时间”中点击了“下一步”时
-        this.selecetdTime = [10, 18];
+        this.selecetdTime = this.$refs.time.time;
         console.log("预约的时间为：" + this.selecetdTime);
       }
     },

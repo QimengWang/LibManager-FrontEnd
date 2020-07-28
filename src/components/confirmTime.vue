@@ -5,14 +5,26 @@
     </span>
     <div class="selectBox">
       <span>请选择预约时间：</span>
-      <Slider v-model="time" range></Slider>
+      <Slider
+        v-model="time"
+        range
+        :step="0.5"
+        :tip-format="format"
+        :marks="marks"
+        :min="min"
+        :max="max"
+      ></Slider>
     </div>
     <div class="stepBox">
-      <Button style="float: left" type="primary" @click="previous"
-        >上一步</Button
+      <Button style="float: left" type="primary" @click="previous">
+        上一步
+      </Button>
+      <Button
+        style="float: right"
+        type="primary"
+        :disabled="!isSelected"
+        @click="next"
       >
-      <!--      :disabled="!isSelected"-->
-      <Button style="float: right" type="primary" @click="next">
         下一步
       </Button>
     </div>
@@ -20,6 +32,8 @@
 </template>
 
 <script>
+import { getTime } from "../api/api";
+
 export default {
   name: "confirmTime",
   props: {
@@ -28,19 +42,46 @@ export default {
   },
   data() {
     return {
+      min: 8,
+      max: 22,
       area: this.$parent.selectedArea,
       selection: this.$parent.selectedSeat,
       time: this.selectedTime,
-      isSelected: this.isSelectedTime
+      isSelected: this.isSelectedTime,
+      availableNumber: 0,
+      availableTime: [],
+      marks: {}
     };
   },
   methods: {
+    async getAvailableTime() {
+      const d = (await getTime(this.area, this.selection + 1)).data;
+      console.log(d);
+      if (d.res === 0) {
+        this.availableNumber = d.num;
+        // this.
+      }
+    },
+    format(val) {
+      const m = (val - Math.floor(val)) * 60;
+      return Math.floor(val) + ":" + m;
+    },
+    setMarks() {
+      for (let i = 8; i <= 22; i++) {
+        this.marks[i] = i + ":00";
+      }
+      console.log(this.marks);
+    },
     previous() {
       this.$emit("nextStep", 0);
     },
     next() {
       this.$emit("nextStep", 2);
     }
+  },
+  created() {
+    this.setMarks();
+    this.getAvailableTime();
   }
 };
 </script>

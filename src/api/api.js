@@ -17,6 +17,12 @@ export function getSeats(data) {
   return axios.get(`/api/v1/1/A?floor=${data[0]}&area=${data[1]}`);
 }
 
+export function getTime(data, seat) {
+  return axios.get(
+    `/api/v1/1/A/8?floor=${data[0]}&area=${data[1]}&seat=${seat}`
+  );
+}
+
 export function orderSeat() {
   return axios.post("/api/v1/appointment/seat", {
     id: "00010001",
