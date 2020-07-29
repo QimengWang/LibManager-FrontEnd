@@ -4,7 +4,7 @@
       您选择了：{{ area[0] }} 楼 {{ area[1] }} 区 {{ selection + 1 }} 号座位
     </span>
     <span>预约时间为：明天 {{ time }}</span>
-    <div>
+    <div class="stepBox">
       <Button type="primary" @click="previous" style="float: left">
         上一步
       </Button>
@@ -20,11 +20,14 @@ import { orderSeat } from "../api/api";
 
 export default {
   name: "completeOrder",
+  props: {
+    selectedTime: Array
+  },
   data() {
     return {
       area: this.$parent.selectedArea,
       selection: this.$parent.selectedSeat,
-      time: this.$parent.selectedTime
+      time: this.selectedTime
     };
   },
   methods: {
@@ -46,7 +49,33 @@ export default {
           duration: 2
         });
       }
+    },
+    change() {
+      console.log(this.time);
+      const val = this.time;
+      const startH = Math.floor(val[0]);
+      const startM = (val[0] - startH) * 60;
+      let start = "";
+      if (startM === 0) {
+        start = startH + ":00";
+      } else {
+        start = startH + ":" + startM;
+      }
+
+      const endH = Math.floor(val[1]);
+      const endM = (val[1] - endH) * 60;
+      let end = "";
+      if (endM === 0) {
+        end = endH + ":00";
+      } else {
+        end = endH + ":" + endM;
+      }
+
+      this.time = start + "-" + end;
     }
+  },
+  mounted() {
+    this.change();
   }
 };
 </script>
@@ -59,6 +88,10 @@ span {
   font-weight: bold;
   font-size: 1rem;
   display: block;
+  margin-top: 3%;
+}
+
+.stepBox {
   margin-top: 3%;
 }
 </style>

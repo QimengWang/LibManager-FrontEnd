@@ -23,7 +23,12 @@
       v-if="step === 1"
       @nextStep="next"
     ></confirm-time>
-    <complete-order v-if="step === 2" @nextStep="next"></complete-order>
+    <complete-order
+      v-if="step === 2"
+      ref="confirm"
+      :selected-time="selectedTime"
+      @nextStep="next"
+    ></complete-order>
   </div>
 </template>
 
@@ -67,6 +72,8 @@ export default {
       }
       if (val === 2) {
         // 当在子组件“确定时间”中点击了“下一步”时
+        this.isSelectedTime = true;
+        // console.log()
         this.selecetdTime = this.$refs.time.time;
         console.log("预约的时间为：" + this.selecetdTime);
       }

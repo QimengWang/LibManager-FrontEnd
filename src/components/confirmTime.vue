@@ -13,6 +13,7 @@
         :marks="marks"
         :min="min"
         :max="max"
+        @on-change="selectTime"
       ></Slider>
     </div>
     <div class="stepBox">
@@ -64,13 +65,21 @@ export default {
     },
     format(val) {
       const m = (val - Math.floor(val)) * 60;
-      return Math.floor(val) + ":" + m;
+      if (m === 30) {
+        return Math.floor(val) + ":" + m;
+      } else {
+        return Math.floor(val) + ":00";
+      }
     },
     setMarks() {
       for (let i = 8; i <= 22; i++) {
         this.marks[i] = i + ":00";
       }
-      console.log(this.marks);
+    },
+    selectTime() {
+      // console.log("当前选择的时间是：" + val);
+      this.isSelected = true;
+      console.log(this.time);
     },
     previous() {
       this.$emit("nextStep", 0);
@@ -104,6 +113,6 @@ span {
 
 .stepBox {
   width: 100%;
-  margin-top: 5%;
+  margin-top: 8%;
 }
 </style>
