@@ -180,6 +180,7 @@ export default {
   flex-direction: row;
 }
 .book_table {
-  margin: 20px;
+  margin-top: 3%;
+  /*margin: 20px;*/
 }
 </style>
