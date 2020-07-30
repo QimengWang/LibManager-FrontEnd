@@ -23,14 +23,6 @@ export function getTime(data, seat) {
   );
 }
 
-export function orderSeat() {
-  return axios.post("/api/v1/appointment/seat", {
-    id: "00010001",
-    floor: 1,
-    area: "A",
-    seat: 9,
-    data: "2020-01-01",
-    start: "08:00:00",
-    end: "12:30:00"
-  });
+export function orderSeat(data) {
+  return axios.post("/api/v1/appointment/seat", data);
 }

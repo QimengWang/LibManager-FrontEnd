@@ -106,29 +106,37 @@ export default {
       this.data = info;
       // 设置默认area
       if (this.isSelectedSeat === false) {
+        console.log("设置默认区域");
         this.area[0] = info[0].value;
         this.area[1] = info[0].children[0].value;
+        this.setSeats();
       }
     },
 
-    selectArea() {
-      const d = this.selection;
-      document.getElementsByTagName("img")[
-        d
-      ].src = require("../assets/available.png");
-      this.isSelected = false;
-      this.selection = -1;
-      this.$emit("clear");
-      // console.log("选择的座位：" + this.selection);
-      // console.log("选择的区域：" + this.isSelected);
+    selectArea(val) {
+      if (this.isSelected === true) {
+        //在原区域已选过座位，先进行清除
+        const d = this.selection;
+        document.getElementsByTagName("img")[
+          d
+        ].src = require("../assets/available.png");
+        this.isSelected = false;
+        this.selection = -1;
+        this.$emit("clear");
+      }
+
+      this.area = val;
       this.setSeats();
     },
 
     async setSeats() {
+      console.log("设置的座位属于区域：" + this.area[0] + "-" + this.area[1]);
       const d = (await getSeats(this.area)).data;
 
       if (d.res === 0) {
         this.isAvailable = d.isAvailable;
+
+        console.log(d.isAvailable);
       }
     },
 
@@ -175,7 +183,6 @@ export default {
       this.isAvailable[i] = true;
     }
     this.setAreas();
-    this.setSeats();
   },
   mounted() {}
 };

@@ -26,7 +26,6 @@
     <complete-order
       v-if="step === 2"
       ref="confirm"
-      :selected-time="selectedTime"
       @nextStep="next"
     ></complete-order>
   </div>
@@ -44,7 +43,7 @@ export default {
       selectedArea: [], // 选择的区域
       selectedSeat: -1, // 选择的座位号
       isSelectedSeat: false,
-      selectedTime: [8, 22], // 选择的时间
+      selectedTime: [8, 8], // 选择的时间
       isSelectedTime: false,
       isConfirmed: false
     };
@@ -56,27 +55,26 @@ export default {
   },
   methods: {
     next(val) {
-      this.step = val;
       if (val === 1) {
         // 当在子组件“选择座位”中点击了“下一步”时
         this.selectedSeat = this.$refs.seat.selection;
         this.isSelectedSeat = true;
         this.selectedArea = this.$refs.seat.area;
-        console.log("选择的区域：" + this.selectedArea);
-        console.log("选择的座位：" + this.selectedSeat);
       }
       if (val === 0) {
         // 当在子组件“确定时间”中点击了“上一步”时
-        // console.log("选择的座位：" + this.$refs.seat.selection);
-        // console.log("选择的区域：" + this.$refs.seat.area);
+        this.isSelectedTime = true;
+        this.selectedTime = this.$refs.time.time;
       }
       if (val === 2) {
         // 当在子组件“确定时间”中点击了“下一步”时
         this.isSelectedTime = true;
-        // console.log()
-        this.selecetdTime = this.$refs.time.time;
-        console.log("预约的时间为：" + this.selecetdTime);
+        this.selectedTime = this.$refs.time.time;
       }
+      // console.log("选择的区域：" + this.selectedArea);
+      // console.log("选择的座位：" + this.selectedSeat);
+      // console.log("选择的时间：" + this.selectedTime);
+      this.step = val;
     },
 
     reset() {

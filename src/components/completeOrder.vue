@@ -20,14 +20,13 @@ import { orderSeat } from "../api/api";
 
 export default {
   name: "completeOrder",
-  props: {
-    selectedTime: Array
-  },
   data() {
     return {
       area: this.$parent.selectedArea,
       selection: this.$parent.selectedSeat,
-      time: this.selectedTime
+      start: "",
+      end: "",
+      time: this.start + "-" + this.end
     };
   },
   methods: {
@@ -35,8 +34,21 @@ export default {
       this.$emit("nextStep", 1);
     },
     async confirm() {
-      console.log(await orderSeat());
-      const d = (await orderSeat()).data;
+      const data = {};
+      data.id = "00010001";
+      data.floor = Number(this.area[0]);
+      data.area = this.area[1];
+      data.seat = this.selection + 1;
+      const t = new Date();
+      const y = t.getFullYear();
+      const m = t.getMonth() + 1;
+      const r = t.getDate() + 1;
+      data.date = y + "-" + m + "-" + r;
+      data.start = this.start + ":00";
+      data.end = this.end + ":00";
+      // console.log(JSON.parse(JSON.stringify(data)));
+
+      const d = (await orderSeat(data)).data;
       console.log(d);
       if (d.res === 0) {
         this.$Notice.success({
@@ -51,8 +63,7 @@ export default {
       }
     },
     change() {
-      console.log(this.time);
-      const val = this.time;
+      const val = this.$parent.selectedTime;
       const startH = Math.floor(val[0]);
       const startM = (val[0] - startH) * 60;
       let start = "";
@@ -61,6 +72,7 @@ export default {
       } else {
         start = startH + ":" + startM;
       }
+      this.start = start;
 
       const endH = Math.floor(val[1]);
       const endM = (val[1] - endH) * 60;
@@ -70,6 +82,7 @@ export default {
       } else {
         end = endH + ":" + endM;
       }
+      this.end = end;
 
       this.time = start + "-" + end;
     }

@@ -77,9 +77,7 @@ export default {
       }
     },
     selectTime() {
-      // console.log("当前选择的时间是：" + val);
-      this.isSelected = true;
-      console.log(this.time);
+      this.isSelected = this.time[1] - this.time[0] !== 0;
     },
     previous() {
       this.$emit("nextStep", 0);
