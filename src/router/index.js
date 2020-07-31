@@ -9,6 +9,7 @@ import myOrder from "../components/myOrder";
 import bookStatistics from "../components/bookStatistics";
 import orderStatistics from "../components/orderStatistics";
 import personInfo from "../components/personInfo";
+import userManagement from "../components/userManagement";
 
 Vue.use(VueRouter);
 
@@ -58,6 +59,11 @@ const routes = [
         path: "/orderStatistics",
         name: "orderStatistics",
         component: orderStatistics
+      },
+      {
+        path: "/userManagement",
+        name: "userManagement",
+        component: userManagement
       }
     ]
   },

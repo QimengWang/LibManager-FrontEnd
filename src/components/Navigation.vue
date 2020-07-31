@@ -6,7 +6,8 @@
     <div class="infoBox">
       <Dropdown @on-click="userClick">
         <a>
-          <span>{{ name }}</span>
+<!--          <span>{{ name }}</span>-->
+          <span>{{$store.state.userStatus}}</span>
           <Icon type="ios-arrow-down" color="white" size="17"></Icon>
         </a>
         <DropdownMenu slot="list">

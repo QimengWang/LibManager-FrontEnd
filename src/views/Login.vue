@@ -47,6 +47,11 @@ export default {
           title: "账号或密码不能为空！",
           duration: 2
         });
+      } else if (this.status === "") {
+        this.$Notice.error({
+          title: "登录类型不能为空！",
+          duration: 2
+        });
       } else {
         let flag = (await userLogin(this.user, this.status)).data;
         if (flag.res === 0) {
@@ -54,7 +59,13 @@ export default {
             title: flag.msg,
             duration: 2
           });
-          window.location.href = "http://localhost:8090/bookSearching";
+          sessionStorage.setItem("setStatus", this.status);
+          this.$store.commit("setStatus", this.status);
+          if(this.status === 'user'){
+            window.location.href = "http://localhost:8090/bookSearching";
+          } else{
+            window.location.href = "http://localhost:8090/userManagement";
+          }
         }
         if (flag.res === 1) {
           console.log(flag.msg);
