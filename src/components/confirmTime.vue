@@ -16,6 +16,16 @@
         @on-change="selectTime"
       ></Slider>
     </div>
+    <div class="availableBox">
+      <span style="margin-bottom: 1%">可选择的时间段：</span>
+      <span
+        style="font-size: 0.8rem"
+        v-for="(item, value) in availableTime"
+        :key="value"
+      >
+        {{ item.start + "-" + item.end }}
+      </span>
+    </div>
     <div class="stepBox">
       <Button style="float: left" type="primary" @click="previous">
         上一步
@@ -60,7 +70,7 @@ export default {
       console.log(d);
       if (d.res === 0) {
         this.availableNumber = d.num;
-        // this.
+        this.availableTime = d.data;
       }
     },
     format(val) {
@@ -103,6 +113,7 @@ span {
   font-weight: bold;
   font-size: 1rem;
   display: inline-block;
+  margin: 0 auto;
 }
 
 .selectBox {
@@ -112,5 +123,11 @@ span {
 .stepBox {
   width: 100%;
   margin-top: 8%;
+}
+
+.availableBox {
+  margin-top: 6%;
+  display: flex;
+  flex-direction: column;
 }
 </style>

@@ -30,12 +30,7 @@
                 @click="selectSeat(r, c)"
                 alt="pic"
               />
-              <img
-                v-else-if="isAvailable[location(r, c)] === false"
-                src="../assets/unavailable.png"
-                alt="pic"
-              />
-              <img v-else src="../assets/select.png" alt="pic" />
+              <img v-else src="../assets/unavailable.png" alt="pic" />
             </td>
           </tr>
         </tbody>
@@ -115,7 +110,7 @@ export default {
 
     selectArea(val) {
       if (this.isSelected === true) {
-        //在原区域已选过座位，先进行清除
+        // 在原区域已选过座位，先进行清除
         const d = this.selection;
         document.getElementsByTagName("img")[
           d
