@@ -54,10 +54,5 @@
 <script>
 export default {
   name: "Sidebar",
-  mounted() {
-    if (sessionStorage.getItem('setStatus')) {
-      this.$store.commit('setStatus',sessionStorage.getItem('setStatus'))
-    }
-  }
 };
 </script>

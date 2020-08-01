@@ -68,6 +68,14 @@ export default {
       console.log(this.form.pwdChanged);
       console.log(this.form.pwdConfirm);
     }
+  },
+  mounted() {
+    if (sessionStorage.getItem("setStatus")) {
+      this.$store.commit("setStatus", sessionStorage.getItem("setStatus"));
+    }
+    if (sessionStorage.getItem("userId")) {
+      this.$store.commit("setId", sessionStorage.getItem("userId"));
+    }
   }
 };
 </script>

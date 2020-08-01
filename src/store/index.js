@@ -5,13 +5,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    userStatus: null
+    userStatus: null,
+    userId: null
   },
   mutations: {
-    setStatus(state,payload){
-      if (payload){
-        state.userStatus = payload
-      }
+    setStatus(state, payload) {
+      state.userStatus = payload;
+    },
+    setId(state, payload) {
+      state.userId = payload;
     }
   },
   actions: {},

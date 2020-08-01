@@ -60,7 +60,7 @@ export default {
             duration: 2
           });
           sessionStorage.setItem("setStatus", this.status);
-          this.$store.commit("setStatus", this.status);
+          sessionStorage.setItem("userId", this.user.id);
           if(this.status === 'user'){
             window.location.href = "http://localhost:8090/bookSearching";
           } else{
