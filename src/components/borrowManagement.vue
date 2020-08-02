@@ -4,7 +4,7 @@
       <Icon type="ios-pulse" size="23" />
       <h3>待归还</h3>
     </div>
-    <div v-if="data.length === 0" style="margin-top: 10px">
+    <div v-if="borrowList.length === 0" style="margin-top: 10px">
       <Alert show-icon>
         <template slot="desc">您暂无待归还书籍，快去借阅吧！</template>
       </Alert>
@@ -12,9 +12,9 @@
     <div v-else class="b_table">
       <Table
         :columns="borrowing"
-        :data="data">
-        <template slot-scope="{ row, index }" slot="action">
-          <Button type="primary" size="small" style="margin-right: 5px" @click="giveBack(row,index)">还书</Button>
+        :data="borrowList">
+        <template slot-scope="{ row }" slot="action">
+          <Button type="primary" size="small" style="margin-right: 5px" @click="giveBack(row)">还书</Button>
         </template>
       </Table>
     </div>
@@ -22,19 +22,21 @@
       <Icon type="ios-pulse" size="23" />
       <h3>已归还</h3>
     </div>
-    <div v-if="data2.length === 0" style="margin-top: 10px">
+    <div v-if="returnedList.length === 0" style="margin-top: 10px">
       <Alert show-icon>
         <template slot="desc">您暂无已归还书籍</template>
       </Alert>
     </div>
-    <div  v-else class="b_table">
-      <Table :columns="returned" :data="data2"></Table>
+    <div v-else class="b_table">
+      <Table :columns="returned" :data="returnedList"></Table>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+  import {listBorrowed, returnBook, listReturned} from "../api/api";
+
+  export default {
   name: "borrowManagement",
   data: function() {
     return {
@@ -109,61 +111,44 @@ export default {
           align: "center"
         }
       ],
-      data: [
-        {
-          isbn: "978-7-5680-5950-3",
-          name: "数据结构",
-          author: "黄薇",
-          press: "华中科技大学出版社",
-          b_time: "2020.07.24",
-          e_time: "2020.08.24"
-        },
-        {
-          isbn: "978-7-5680-5950-3",
-          name: "数据结构",
-          author: "黄薇",
-          press: "华中科技大学出版社",
-          b_time: "2020.07.24",
-          e_time: "2020.08.24"
-        },
-        {
-          isbn: "978-7-5680-5950-3",
-          name: "数据结构",
-          author: "黄薇",
-          press: "华中科技大学出版社",
-          b_time: "2020.07.24",
-          e_time: "2020.08.24"
-        },
-        {
-          isbn: "978-7-5680-5950-3",
-          name: "数据结构",
-          author: "黄薇",
-          press: "华中科技大学出版社",
-          b_time: "2020.07.24",
-          e_time: "2020.08.24"
-        }
-      ],
-      data2:[
-        // {
-        //   isbn: "978-7-5680-5950-3",
-        //   name: "数据结构",
-        //   author: "黄薇",
-        //   press: "华中科技大学出版社",
-        //   b_time: "2020.07.24",
-        //   e_time: "2020.07.30"
-        // },
-      ]
+      borrowList: [{}],
+      returnedList:[{}]
     };
   },
   methods: {
-    giveBack(row,index){
-      console.log(row.isbn);
-      console.log(index)
-      this.data.splice(index, 1);
-      this.$Notice.success({
-        title: '还书成功！',
-      });
+    listBorrowBook: async function() {
+      let flag = (await listBorrowed(this.$store.state.userId)).data;
+      this.borrowList = flag.data;
+    },
+    giveBack: async function(row) {
+      console.log(row.id);
+      let flag = (await returnBook(this.$store.state.userId, row.id)).data;
+      if (flag.res === 0) {
+        this.$Notice.success({
+          title: flag.msg,
+          duration: 2
+        });
+      } else if (flag.res === 1){
+        this.$Notice.error({
+          title: flag.msg,
+          duration: 2
+        });
+      } else {
+        this.$Notice.error({
+          title: flag.msg,
+          duration: 2
+        });
+      }
+      location.reload();
+    },
+    listReturnedBook: async function() {
+      let flag = (await listReturned(this.$store.state.userId)).data;
+      this.returnedList = flag.data;
     }
+  },
+  async mounted() {
+    this.listBorrowBook();
+    this.listReturnedBook();
   }
 };
 </script>

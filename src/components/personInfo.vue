@@ -80,6 +80,7 @@
 
 <script>
 import navigation from "./Navigation";
+import { getUserInfo } from "../api/api";
 
 export default {
   name: "personInfo",
@@ -88,13 +89,7 @@ export default {
   },
   data() {
     return {
-      userInfo: {
-        id: "0101",
-        name: "Cl",
-        sex: "女",
-        tel: "1234567890",
-        email: "281922222@qq.com"
-      },
+      userInfo: {},
       modelTel: false,
       modelEml: false,
       newTel: "",
@@ -113,7 +108,14 @@ export default {
     },
     emlChanged() {
       console.log(this.newEmail);
+    },
+    getInfo: async function(){
+      let flag = (await getUserInfo(this.$store.state.userId)).data;
+      this.userInfo = flag;
     }
+  },
+  mounted() {
+    this.getInfo();
   }
 };
 </script>

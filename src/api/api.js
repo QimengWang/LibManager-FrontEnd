@@ -26,3 +26,73 @@ export function getTime(data, seat) {
 export function orderSeat(data) {
   return axios.post("/api/v1/appointment/seat", data);
 }
+
+export function searchBook(type, bookValue) {
+  return axios.post("/api/v1/search/book", {
+    type: type,
+    value: bookValue
+  });
+}
+
+export function bookBorrow(userId, bookId) {
+  return axios.post("/api/v1/borrow",{
+    cid: userId,
+    bid: bookId
+  });
+}
+
+export function listBorrowed(id) {
+  return axios.get("/api/v1/list_borrowed_book",{
+    params: {
+      cid: id
+    }
+  });
+}
+
+export function returnBook(userId, bookId) {
+  return axios.post("/api/v1/return_book", {
+    cid: userId,
+    bid: bookId
+  });
+}
+
+export function listReturned(id) {
+  return axios.get("/api/v1/list_returned_book",{
+    params: {
+      cid: id
+    }
+  });
+}
+
+export function categoryStatistic(id) {
+  return axios.get("/api/v1/client/book/statistic",{
+    params: {
+      cid: id
+    }
+  });
+}
+
+export function timeStatistic(id) {
+  return axios.get("/api/v1/client/book_num/statistic", {
+    params: {
+      cid: id
+    }
+  });
+}
+
+export function getUserInfo(id) {
+  return axios.get("/api/v1/client", {
+    params: {
+      cid: id
+    }
+  });
+}
+
+export function changePwd(id, formPwd) {
+  return axios.post("/api/v1/client/change_pwd",{
+    id: id,
+    oldPwd: formPwd.pwd,
+    newPwd: formPwd.pwdChanged,
+    pwdConfirm: formPwd.pwdConfirm
+  });
+}

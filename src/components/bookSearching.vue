@@ -1,7 +1,7 @@
 <template>
   <div class="mainBox">
     <div class="search">
-      <Select style="width:100px">
+      <Select style="width:100px" v-model="type">
         <Option
           v-for="item in wordList"
           :value="item.value"
@@ -15,7 +15,8 @@
           enter-button
           placeholder="请输入检索词"
           style="width: 300px"
-          @on-search="btnClick"
+          v-model="bookValue"
+          @on-search="search"
         />
       </div>
     </div>
@@ -38,11 +39,13 @@
 </template>
 
 <script>
+import { searchBook, bookBorrow } from "../api/api";
 export default {
   name: "Test",
   data() {
     return {
-      value: "",
+      type: "",
+      bookValue: "",
       wordList: [
         {
           value: "keyword",
@@ -73,7 +76,7 @@ export default {
         {
           title: "书名",
           key: "name",
-          width: 120,
+          // width: 120,
           align: "center"
         },
         {
@@ -110,59 +113,43 @@ export default {
           align: "center"
         }
       ],
-      data1: [
-        {
-          id: "001105001001",
-          isbn: "978-7-5680-5950-3",
-          name: "数据结构",
-          author: "黄薇",
-          press: "华中科技大学出版社",
-          pry: "2020.1",
-          total: 5,
-          num: 0
-        },
-        {
-          id: "001105001001",
-          isbn: "978-7-5680-5950-3",
-          name: "数据结构",
-          author: "黄薇",
-          press: "华中科技大学出版社",
-          pry: "2020.1",
-          total: 5,
-          num: 0
-        },
-        {
-          id: "001105001001",
-          isbn: "978-7-5680-5950-3",
-          name: "数据结构",
-          author: "黄薇",
-          press: "华中科技大学出版社",
-          pry: "2020.1",
-          total: 5,
-          num: 0
-        },
-        {
-          id: "001105001001",
-          isbn: "978-7-5680-5950-3",
-          name: "数据结构",
-          author: "黄薇",
-          press: "华中科技大学出版社",
-          pry: "2020.1",
-          total: 5,
-          num: 0
-        }
-      ]
+      data1: [{}]
     };
   },
   methods: {
-    btnClick() {
-      console.log("btnClick");
+    search: async function() {
+      console.log(this.bookValue);
+      let flag = (await searchBook(this.type, this.bookValue)).data;
+      if (flag.res === 0) {
+        this.data1 = flag.data;
+      }
+      if (flag.res === 1) {
+        this.$Notice.error({
+          title: flag.msg,
+          duration: 2
+        });
+      }
     },
-    btnClick2() {
-      console.log("btnClick2");
-    },
-    borrowBook(row) {
+    borrowBook: async function(row) {
       console.log(row.id);
+      let flag = (await bookBorrow(this.$store.state.userId, row.id)).data
+      console.log(flag.res);
+      if (flag.res === 0) {
+        this.$Notice.success({
+          title: flag.msg,
+          duration: 2
+        });
+      } else if (flag.res === 1){
+        this.$Notice.error({
+          title: flag.msg,
+          duration: 2
+        });
+      } else {
+        this.$Notice.error({
+          title: flag.msg,
+          duration: 2
+        });
+      }
     }
   }
 };

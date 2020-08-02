@@ -6,21 +6,21 @@
 </template>
 
 <script>
+import { categoryStatistic, timeStatistic} from "../api/api";
 export default {
   name: "bookStatistics",
   data: function() {
     return {
-      types: [
-        { value: 5, name: "经典" },
-        { value: 3, name: "教材" },
-        { value: 4, name: "辅导书" },
-        { value: 8, name: "科幻" },
-        { value: 10, name: "悬疑" }
-      ]
+      types: [{}],
+      totalMessage: [{}],
+      month: [],
+      num: []
     };
   },
   methods: {
-    draw() {
+    draw: async function() {
+      let flag = (await categoryStatistic(this.$store.state.userId)).data;
+      this.types = flag.data;
       let myChart = this.echarts.init(document.getElementById("myChart"));
       myChart.setOption({
         title: {
@@ -48,7 +48,11 @@ export default {
         ]
       });
     },
-    draw2() {
+    draw2:async function() {
+      let flag = (await timeStatistic(this.$store.state.userId)).data;
+      this.totalMessage = flag.data;
+      console.log(this.totalMessage);
+      console.log(this.totalMessage.month);
       let myChart2 = this.echarts.init(document.getElementById("myChart2"));
       myChart2.setOption({
         title: {

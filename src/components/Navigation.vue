@@ -6,8 +6,7 @@
     <div class="infoBox">
       <Dropdown @on-click="userClick">
         <a>
-<!--          <span>{{ name }}</span>-->
-          <span>{{$store.state.userStatus}}</span>
+          <span>{{ name }}</span>
           <Icon type="ios-arrow-down" color="white" size="17"></Icon>
         </a>
         <DropdownMenu slot="list">
@@ -15,21 +14,30 @@
           <DropdownItem name="pwdChange">修改密码</DropdownItem>
         </DropdownMenu>
       </Dropdown>
-      <Modal v-model="modal" title="修改密码" @on-ok="pwdChange">
-        <Form :model="form" label-position="left" :label-width="80">
-          <FormItem label="原密码">
-            <Input v-model="form.pwd" />
+      <Modal v-model="modal" title="修改密码" footer-hide>
+        <Form
+          ref="formPwd"
+          :model="formPwd"
+          label-position="left"
+          :label-width="80"
+          :rules="ruleValidate"
+        >
+          <FormItem label="原密码" prop="pwd">
+            <Input v-model="formPwd.pwd" />
           </FormItem>
-          <FormItem label="新密码">
-            <Input v-model="form.pwdChanged" />
+          <FormItem label="新密码" prop="pwdChanged">
+            <Input v-model="formPwd.pwdChanged" />
           </FormItem>
-          <FormItem label="确认新密码">
-            <Input v-model="form.pwdConfirm" />
+          <FormItem label="确认新密码" prop="pwdConfirm">
+            <Input v-model="formPwd.pwdConfirm" />
+          </FormItem>
+          <FormItem>
+            <Button type="primary" @click="confirm()">Submit</Button>
           </FormItem>
         </Form>
       </Modal>
       <a>
-        <Icon type="md-exit" color="white" size="17"/>
+        <Icon type="md-exit" color="white" size="17" />
         <span @click="loginOut">退出</span>
       </a>
     </div>
@@ -37,16 +45,43 @@
 </template>
 
 <script>
+import { getUserInfo, changePwd } from "../api/api";
+
 export default {
   name: "Navigation",
   data() {
+    const validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入新密码"));
+      } else {
+        if (this.formPwd.pwdConfirm !== "") {
+          this.$refs.formPwd.validateField("pwdConfirm");
+        }
+        callback();
+      }
+    };
+    const validatePassCheck = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入新密码"));
+      } else if (value !== this.formPwd.pwdChanged) {
+        callback(new Error("两次密码不一致！"));
+      } else {
+        callback();
+      }
+    };
     return {
-      name: "王琦梦",
+      name: "",
       modal: false,
-      form: {
+      loading: true,
+      formPwd: {
         pwd: "",
         pwdChanged: "",
         pwdConfirm: ""
+      },
+      ruleValidate: {
+        pwd: [{ required: true, message: "密码不能为空", trigger: "blur" }],
+        pwdChanged: [{ validator: validatePass, trigger: "blur" }],
+        pwdConfirm: [{ validator: validatePassCheck, trigger: "blur" }]
       }
     };
   },
@@ -54,6 +89,9 @@ export default {
     loginOut() {
       // alert("确定退出？");
       window.open("http://localhost:8090", "_self");
+    },
+    setName: async function() {
+      this.name = (await getUserInfo(this.$store.state.userId)).data.name;
     },
     userClick: function(name) {
       console.log(name);
@@ -63,19 +101,34 @@ export default {
         this.modal = true;
       }
     },
-    pwdChange(){
-      console.log(this.form.pwd);
-      console.log(this.form.pwdChanged);
-      console.log(this.form.pwdConfirm);
+    async confirm() {
+      const flag = (await changePwd(this.$store.state.userId, this.formPwd)).data;
+      if (flag.res === 0) {
+        this.$Notice.success({
+          title: flag.msg,
+          duration: 2
+        });
+      } else if (flag.res === 1) {
+        this.$Notice.error({
+          title: flag.msg,
+          duration: 2
+        });
+      } else {
+        this.$Notice.error({
+          title: flag.msg,
+          duration: 2
+        });
+      }
     }
   },
-  mounted() {
+  async mounted() {
     if (sessionStorage.getItem("setStatus")) {
       this.$store.commit("setStatus", sessionStorage.getItem("setStatus"));
     }
     if (sessionStorage.getItem("userId")) {
       this.$store.commit("setId", sessionStorage.getItem("userId"));
     }
+    this.setName();
   }
 };
 </script>
