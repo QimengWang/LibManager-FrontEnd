@@ -14,17 +14,21 @@ export function getAreas() {
 }
 
 export function getSeats(data) {
-  return axios.get(`/api/v1/1/A?floor=${data[0]}&area=${data[1]}`);
+  return axios.get(`/api/v1/appointment/area?floor=${data[0]}&area=${data[1]}`);
 }
 
 export function getTime(data, seat) {
   return axios.get(
-    `/api/v1/1/A/8?floor=${data[0]}&area=${data[1]}&seat=${seat}`
+    `/api/v1/appointment/time?floor=${data[0]}&area=${data[1]}&seat=${seat}`
   );
 }
 
 export function orderSeat(data) {
   return axios.post("/api/v1/appointment/seat", data);
+}
+
+export function getOrders(id) {
+  return axios.get(`/api/v1/appointment/id?id=${id}`);
 }
 
 export function searchBook(type, bookValue) {

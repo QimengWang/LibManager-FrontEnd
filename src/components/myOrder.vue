@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { getOrders } from "../api/api";
+
 export default {
   name: "myOrder",
   data() {
@@ -59,30 +61,24 @@ export default {
         }
       ],
       isOrdered: true,
-      orderInfo: [
-        {
-          date: "2020-01-01",
-          start: "08:30:00",
-          end: "12:00:00",
-          floor: -1,
-          area: "A",
-          seat: -1
-        },
-        {
-          date: "2020-01-01",
-          start: "14:30:00",
-          end: "18:00:00",
-          floor: -1,
-          area: "A",
-          seat: -1
-        }
-      ]
+      orderInfo: []
     };
   },
   methods: {
     remove(index) {
       this.orderInfo.splice(index, 1);
+    },
+    async getOrders() {
+      const id = this.$store.state.userId;
+      const d = (await getOrders(id)).data;
+      console.log(d);
+      if (d.msg === 0) {
+        this.orderInfo = d.data;
+      }
     }
+  },
+  created() {
+    this.getOrders();
   }
 };
 </script>

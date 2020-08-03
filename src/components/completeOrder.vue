@@ -35,7 +35,7 @@ export default {
     },
     async confirm() {
       const data = {};
-      data.id = "00010001";
+      data.id = this.$store.state.userId;
       data.floor = Number(this.area[0]);
       data.area = this.area[1];
       data.seat = this.selection + 1;
