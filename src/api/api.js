@@ -100,3 +100,17 @@ export function changePwd(id, formPwd) {
     pwdConfirm: formPwd.pwdConfirm
   });
 }
+
+export function changeTel(id, Tel) {
+  return axios.post("/api/v1/client/change_tel", {
+    id: id,
+    newTel: Tel
+  });
+}
+
+export function changeEmail(id, Tel) {
+  return axios.post("/api/v1/client/change_email", {
+    id: id,
+    newEmail: Tel
+  });
+}

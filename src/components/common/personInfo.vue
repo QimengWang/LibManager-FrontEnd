@@ -10,7 +10,6 @@
             height="200"
             style="border-radius: 50%"
           />
-          <span style="font-size: 20px;margin-top: 10px;color: #2d8cf0">奥利给!</span>
         </div>
         <div class="card" >
           <Card >
@@ -53,19 +52,25 @@
             </div>
           </Card>
         </div>
-        <Modal v-model="modelTel" @on-ok="telChanged" title="新电话号码">
+        <Modal v-model="modelTel" title="新电话号码">
           <Form>
             <FormItem>
               <Input v-model="newTel" />
             </FormItem>
           </Form>
+          <div slot="footer">
+            <Button type="primary" size="large" long @click="telChanged">提交</Button>
+          </div>
         </Modal>
-        <Modal v-model="modelEml" @on-ok="emlChanged" title="新邮箱地址">
+        <Modal v-model="modelEml" title="新邮箱地址">
           <Form>
             <FormItem>
               <Input v-model="newEmail" />
             </FormItem>
           </Form>
+          <div slot="footer">
+            <Button type="primary" size="large" long @click="emlChanged">提交</Button>
+          </div>
         </Modal>
         <div class="returnBtn">
           <Button type="primary" shape="circle" to="/bookSearching">
@@ -80,7 +85,7 @@
 
 <script>
 import navigation from "./Navigation";
-import { getUserInfo } from "../../api/api";
+import { getUserInfo, changeTel, changeEmail } from "../../api/api";
 
 export default {
   name: "personInfo",
@@ -103,11 +108,37 @@ export default {
     emailChange() {
       this.modelEml = true;
     },
-    telChanged() {
-      console.log(this.newTel);
+    async telChanged() {
+      let flag = (await changeTel(this.$store.state.userId,this.newTel)).data;
+      if (flag.res === 0) {
+        this.$Notice.success({
+          title: flag.msg,
+          duration: 2
+        });
+        this.modelTel = false;
+        location.reload();
+      } else {
+        this.$Notice.error({
+          title: flag.msg,
+          duration: 2
+        });
+      }
     },
-    emlChanged() {
-      console.log(this.newEmail);
+    async emlChanged() {
+      let flag = (await changeEmail(this.$store.state.userId,this.newEmail)).data;
+      if (flag.res === 0) {
+        this.$Notice.success({
+          title: flag.msg,
+          duration: 2
+        });
+        this.modelEml = false;
+        location.reload();
+      } else {
+        this.$Notice.error({
+          title: flag.msg,
+          duration: 2
+        });
+      }
     },
     getInfo: async function(){
       let flag = (await getUserInfo(this.$store.state.userId)).data;

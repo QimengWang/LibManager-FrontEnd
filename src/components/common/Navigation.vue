@@ -19,20 +19,20 @@
           ref="formPwd"
           :model="formPwd"
           label-position="left"
-          :label-width="80"
+          :label-width="85"
           :rules="ruleValidate"
         >
           <FormItem label="原密码" prop="pwd">
-            <Input v-model="formPwd.pwd" />
+            <Input type="password" v-model="formPwd.pwd" />
           </FormItem>
           <FormItem label="新密码" prop="pwdChanged">
-            <Input v-model="formPwd.pwdChanged" />
+            <Input type="password" v-model="formPwd.pwdChanged" />
           </FormItem>
           <FormItem label="确认新密码" prop="pwdConfirm">
-            <Input v-model="formPwd.pwdConfirm" />
+            <Input type="password" v-model="formPwd.pwdConfirm" />
           </FormItem>
           <FormItem>
-            <Button type="primary" @click="confirm()">Submit</Button>
+            <Button type="primary" @click="confirm">提交</Button>
           </FormItem>
         </Form>
       </Modal>
@@ -80,8 +80,11 @@ export default {
       },
       ruleValidate: {
         pwd: [{ required: true, message: "密码不能为空", trigger: "blur" }],
-        pwdChanged: [{ validator: validatePass, trigger: "blur" }],
-        pwdConfirm: [{ validator: validatePassCheck, trigger: "blur" }]
+        pwdChanged: [
+          { validator: validatePass, trigger: "blur", required: true },
+          { type: "string", min: 6, message: "密码至少为6位字符", trigger: "blur" }
+        ],
+        pwdConfirm: [{ validator: validatePassCheck, trigger: "blur", required: true}]
       }
     };
   },
@@ -108,6 +111,7 @@ export default {
           title: flag.msg,
           duration: 2
         });
+        this.modal = false;
       } else if (flag.res === 1) {
         this.$Notice.error({
           title: flag.msg,
