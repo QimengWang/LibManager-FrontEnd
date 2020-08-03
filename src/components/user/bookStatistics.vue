@@ -1,6 +1,7 @@
 <template>
   <div class="mainBox">
-    <div id="myChart" style="width:60%;height:400px;"></div>
+    <h2>截止到目前为止的一年里，我总共借阅图书{{totalBooks}}本，其中{{maxMonth}}份借书数最多</h2>
+    <div id="myChart" style="width:65%;height:250px;margin-top: 15px"></div>
     <div id="myChart2" style="width:60%;height:350px;"></div>
   </div>
 </template>
@@ -16,6 +17,19 @@ export default {
       month: [],
       num: []
     };
+  },
+  computed: {
+    totalBooks() {
+      let sum = 0;
+      for (let i=0;i<this.num.length;i++){
+        sum += this.num[i];
+      }
+      return sum;
+    },
+    maxMonth() {
+      let max = this.num.indexOf(Math.max.apply(Math, this.num));
+      return this.month[max];
+    }
   },
   methods: {
     draw: async function() {
@@ -35,9 +49,9 @@ export default {
           {
             name: "类别统计",
             type: "pie",
-            radius: "45%",
+            radius: "55%",
             // roseType: "angle",
-            center: ["50%", "40%"],
+            center: ["50%", "50%"],
             data: this.types,
             label: {
               normal: {
@@ -48,15 +62,19 @@ export default {
         ]
       });
     },
-    draw2:async function() {
+    draw2: async function() {
       let flag = (await timeStatistic(this.$store.state.userId)).data;
       this.totalMessage = flag.data;
-      console.log(this.totalMessage);
-      console.log(this.totalMessage.month);
+      flag.data.map(item => {
+        this.month.push(item.month);
+      });
+      flag.data.map(item => {
+        this.num.push(item.num);
+      });
       let myChart2 = this.echarts.init(document.getElementById("myChart2"));
       myChart2.setOption({
         title: {
-          text: "借书次数统计",
+          text: "分月数量统计",
           left: "center"
         },
         tooltip: {
@@ -66,7 +84,7 @@ export default {
           name: "时间",
           type: "category",
           boundaryGap: false,
-          data: ["2020-7-28", "2020-7-29", "2020-7-30", "2020-7-31"]
+          data: this.month
         },
         yAxis: {
           name: "本数",
@@ -74,7 +92,7 @@ export default {
         },
         series: {
           type: "line",
-          data: [1, 2, 3, 5]
+          data: this.num
         }
       });
     }
