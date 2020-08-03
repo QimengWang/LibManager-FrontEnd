@@ -2,14 +2,15 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login";
-import BookSearching from "../components/bookSearching";
-import SeatOrdering from "../components/seatOrdering";
-import borrowManagement from "../components/borrowManagement";
-import myOrder from "../components/myOrder";
-import bookStatistics from "../components/bookStatistics";
-import orderStatistics from "../components/orderStatistics";
-import personInfo from "../components/personInfo";
-import userManagement from "../components/userManagement";
+import BookSearching from "../components/user/bookSearching";
+import SeatOrdering from "../components/user/seatOrdering";
+import borrowManagement from "../components/user/borrowManagement";
+import myOrder from "../components/user/myOrder";
+import bookStatistics from "../components/user/bookStatistics";
+import orderStatistics from "../components/user/orderStatistics";
+import personInfo from "../components/common/personInfo";
+import userManagement from "../components/manager/userManagement";
+import bookManagement from "../components/manager/bookManagement";
 
 Vue.use(VueRouter);
 
@@ -64,13 +65,18 @@ const routes = [
         path: "/userManagement",
         name: "userManagement",
         component: userManagement
+      },
+      {
+        path: "/bookManagement",
+        name: "bookManagement",
+        component: bookManagement
       }
     ]
   },
   {
     path: "/personInfo",
     name: "personInfo",
-    component:personInfo
+    component: personInfo
   }
 ];
 

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { categoryStatistic, timeStatistic} from "../api/api";
+import { categoryStatistic, timeStatistic} from "../../api/api";
 export default {
   name: "bookStatistics",
   data: function() {

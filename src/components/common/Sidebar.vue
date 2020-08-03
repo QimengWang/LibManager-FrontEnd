@@ -34,7 +34,7 @@
           <Icon type="ios-people" />
           用户管理
         </MenuItem>
-        <MenuItem name="1">
+        <MenuItem name="1" to="bookManagement">
           <Icon type="md-bookmarks" />
           书籍管理
         </MenuItem>

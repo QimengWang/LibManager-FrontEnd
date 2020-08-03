@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { orderSeat } from "../api/api";
+import { orderSeat } from "../../api/api";
 
 export default {
   name: "completeOrder",

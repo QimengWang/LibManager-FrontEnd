@@ -10,11 +10,15 @@
       </Alert>
     </div>
     <div v-else class="b_table">
-      <Table
-        :columns="borrowing"
-        :data="borrowList">
+      <Table :columns="borrowing" :data="borrowList">
         <template slot-scope="{ row }" slot="action">
-          <Button type="primary" size="small" style="margin-right: 5px" @click="giveBack(row)">还书</Button>
+          <Button
+            type="primary"
+            size="small"
+            style="margin-right: 5px"
+            @click="giveBack(row)"
+            >还书</Button
+          >
         </template>
       </Table>
     </div>
@@ -34,9 +38,9 @@
 </template>
 
 <script>
-  import {listBorrowed, returnBook, listReturned} from "../api/api";
+import { listBorrowed, returnBook, listReturned } from "../../api/api";
 
-  export default {
+export default {
   name: "borrowManagement",
   data: function() {
     return {
@@ -45,7 +49,7 @@
           title: "ISBN号",
           key: "isbn",
           align: "center",
-          tooltip: "50",
+          tooltip: "50"
         },
         {
           title: "书名",
@@ -74,9 +78,9 @@
           align: "center"
         },
         {
-          title: '操作',
-          slot: 'action',
-          align: 'center'
+          title: "操作",
+          slot: "action",
+          align: "center"
         }
       ],
       returned: [
@@ -112,7 +116,7 @@
         }
       ],
       borrowList: [{}],
-      returnedList:[{}]
+      returnedList: [{}]
     };
   },
   methods: {
@@ -128,7 +132,7 @@
           title: flag.msg,
           duration: 2
         });
-      } else if (flag.res === 1){
+      } else if (flag.res === 1) {
         this.$Notice.error({
           title: flag.msg,
           duration: 2

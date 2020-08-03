@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { getUserInfo, changePwd } from "../api/api";
+import { getUserInfo, changePwd } from "../../api/api";
 
 export default {
   name: "Navigation",

@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { getTime } from "../api/api";
+import { getTime } from "../../api/api";
 
 export default {
   name: "confirmTime",

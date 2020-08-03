@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { getOrders } from "../api/api";
+import { getOrders } from "../../api/api";
 
 export default {
   name: "myOrder",

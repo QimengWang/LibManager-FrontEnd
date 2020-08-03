@@ -26,11 +26,11 @@
             <td v-for="c in col" :key="c">
               <img
                 v-if="isAvailable[location(r, c)] === true"
-                src="../assets/available.png"
+                src="../../assets/available.png"
                 @click="selectSeat(r, c)"
                 alt="pic"
               />
-              <img v-else src="../assets/unavailable.png" alt="pic" />
+              <img v-else src="../../assets/unavailable.png" alt="pic" />
             </td>
           </tr>
         </tbody>
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { getAreas, getSeats } from "../api/api";
+import { getAreas, getSeats } from "../../api/api";
 
 export default {
   name: "selectSeat",
@@ -114,7 +114,7 @@ export default {
         const d = this.selection;
         document.getElementsByTagName("img")[
           d
-        ].src = require("../assets/available.png");
+        ].src = require("../../assets/available.png");
         this.isSelected = false;
         this.selection = -1;
         this.$emit("clear");
@@ -141,11 +141,11 @@ export default {
       if (!this.isSelected) {
         // 未选择过座位
         this.selection = d;
-        resource.src = require("../assets/select.png");
+        resource.src = require("../../assets/select.png");
         this.isSelected = true; // 已经选座
       } else if (this.selection === d) {
         // 取消已选择的座位
-        resource.src = require("../assets/available.png");
+        resource.src = require("../../assets/available.png");
         this.isSelected = false; // 未选座
         this.selection = -1;
         this.$emit("clear");

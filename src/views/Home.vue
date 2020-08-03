@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import navigation from "../components/Navigation";
-import sidebar from "../components/Sidebar";
+import navigation from "../components/common/Navigation";
+import sidebar from "../components/common/Sidebar";
 export default {
   name: "Home",
   data() {

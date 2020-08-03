@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { searchBook, bookBorrow } from "../api/api";
+import { searchBook, bookBorrow } from "../../api/api";
 export default {
   name: "Test",
   data() {

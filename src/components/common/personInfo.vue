@@ -5,7 +5,7 @@
       <div class="mainContent">
         <div style="display: flex;flex-direction: column">
           <img
-            src="../assets/info.jpg"
+            src="../../assets/info.jpg"
             width="200"
             height="200"
             style="border-radius: 50%"
@@ -80,7 +80,7 @@
 
 <script>
 import navigation from "./Navigation";
-import { getUserInfo } from "../api/api";
+import { getUserInfo } from "../../api/api";
 
 export default {
   name: "personInfo",
