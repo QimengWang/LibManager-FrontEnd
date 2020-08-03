@@ -91,6 +91,13 @@ export function getUserInfo(id) {
     }
   });
 }
+export function getManagerInfo(id) {
+  return axios.get("/api/v1/manager", {
+    params: {
+      mid: id
+    }
+  });
+}
 
 export function changePwd(id, formPwd) {
   return axios.post("/api/v1/client/change_pwd",{
@@ -113,4 +120,8 @@ export function changeEmail(id, Tel) {
     id: id,
     newEmail: Tel
   });
+}
+
+export function getTotalbook() {
+  return axios.get("/api/v1/get/all_book")
 }

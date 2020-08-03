@@ -11,14 +11,14 @@
             style="border-radius: 50%"
           />
         </div>
-        <div class="card" >
-          <Card >
+        <div class="card">
+          <Card>
             <p slot="title" style="font-size: large">
               <Icon type="md-person" />
               个人信息
             </p>
             <div>
-              <Form :model="userInfo" :label-width="120" class="fontsize" >
+              <Form :model="userInfo" :label-width="120" class="fontsize">
                 <FormItem label="编号">
                   <span style="font-size: 15px">{{ userInfo.id }}</span>
                 </FormItem>
@@ -36,6 +36,7 @@
                     type="primary"
                     icon="ios-create-outline"
                     @click="telChange"
+                    v-show="this.$store.state.userStatus === 'user'"
                   ></Button>
                 </FormItem>
                 <FormItem label="邮箱">
@@ -46,6 +47,7 @@
                     type="primary"
                     icon="ios-create-outline"
                     @click="emailChange"
+                    v-show="this.$store.state.userStatus === 'user'"
                   ></Button>
                 </FormItem>
               </Form>
@@ -73,7 +75,7 @@
           </div>
         </Modal>
         <div class="returnBtn">
-          <Button type="primary" shape="circle" to="/bookSearching">
+          <Button type="primary" shape="circle" @click="returnMain">
             <Icon type="ios-undo" />
             返回主界面
           </Button>
@@ -85,7 +87,7 @@
 
 <script>
 import navigation from "./Navigation";
-import { getUserInfo, changeTel, changeEmail } from "../../api/api";
+import { getUserInfo, getManagerInfo, changeTel, changeEmail } from "../../api/api";
 
 export default {
   name: "personInfo",
@@ -140,13 +142,28 @@ export default {
         });
       }
     },
-    getInfo: async function(){
+    getInfo: async function() {
       let flag = (await getUserInfo(this.$store.state.userId)).data;
       this.userInfo = flag;
+    },
+    getManagerInfo: async function() {
+      let flag = (await getManagerInfo(this.$store.state.userId)).data;
+      this.userInfo = flag;
+    },
+    returnMain(){
+      if (this.$store.state.userStatus === "user") {
+        this.$router.push("/bookSearching");
+      } else {
+        this.$router.push("/userManagement");
+      }
     }
   },
   mounted() {
-    this.getInfo();
+    if (this.$store.state.userStatus === "user") {
+      this.getInfo();
+    } else {
+      this.getManagerInfo();
+    }
   }
 };
 </script>

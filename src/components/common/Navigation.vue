@@ -3,7 +3,7 @@
     <span style="margin-left: 1.7%; font-weight: bold; font-size: 1.15rem">
       自 习 阅 览 室 管 理 系 统
     </span>
-    <div class="infoBox">
+    <div class="infoBox" v-show="$store.state.userStatus === 'user'">
       <Dropdown @on-click="userClick">
         <a>
           <span>{{ name }}</span>
@@ -41,11 +41,26 @@
         <span @click="loginOut">退出</span>
       </a>
     </div>
+    <div class="infoBox" v-show="$store.state.userStatus === 'manager'">
+      <Dropdown @on-click="userClick">
+        <a>
+          <span>{{ name }}</span>
+          <Icon type="ios-arrow-down" color="white" size="17"></Icon>
+        </a>
+        <DropdownMenu slot="list">
+          <DropdownItem name="personInfo">个人信息</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+      <a>
+        <Icon type="md-exit" color="white" size="17" />
+        <span @click="loginOut">退出</span>
+      </a>
+    </div>
   </div>
 </template>
 
 <script>
-import { getUserInfo, changePwd } from "../../api/api";
+import { getUserInfo, getManagerInfo, changePwd } from "../../api/api";
 
 export default {
   name: "Navigation",
@@ -94,7 +109,11 @@ export default {
       window.open("http://localhost:8090", "_self");
     },
     setName: async function() {
-      this.name = (await getUserInfo(this.$store.state.userId)).data.name;
+      if (this.$store.state.userStatus === "user") {
+        this.name = (await getUserInfo(this.$store.state.userId)).data.name;
+      } else {
+        this.name = (await getManagerInfo(this.$store.state.userId)).data.name;
+      }
     },
     userClick: function(name) {
       console.log(name);
