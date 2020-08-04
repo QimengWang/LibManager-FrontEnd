@@ -125,3 +125,22 @@ export function changeEmail(id, Tel) {
 export function getTotalbook() {
   return axios.get("/api/v1/get/all_book")
 }
+
+export function editBookNum(id, num) {
+  return axios.post("/api/v1/change/book_num",{
+    BID: id,
+    BNUM: num
+  });
+}
+
+export function addBook(formBook) {
+  return axios.post("/api/v1/add_book", {
+    BID: formBook.id,
+    BISBN: formBook.isbn,
+    BNAME: formBook.name,
+    BAUTHOR: formBook.author,
+    BPRESS: formBook.press,
+    BPRYM: formBook.prym,
+    BNUM: formBook.num
+  });
+}

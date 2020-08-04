@@ -38,11 +38,11 @@
           <Icon type="md-bookmarks" />
           书籍管理
         </MenuItem>
-        <MenuItem name="2">
+        <MenuItem name="2" to="mBorrowManagement">
           <Icon type="md-swap" />
-          进出人员管理
+          借阅管理
         </MenuItem>
-        <MenuItem name="3">
+        <MenuItem name="3" to="Statistics">
           <Icon type="ios-stats" />
           数据统计
         </MenuItem>

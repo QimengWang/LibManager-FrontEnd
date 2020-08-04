@@ -13,11 +13,56 @@
         </template>
       </Table>
     </div>
+    <Modal v-model="modelEdit" title="修改馆藏数" width="300" draggable>
+      <Form>
+        <FormItem>
+          <Input v-model="newNum" />
+        </FormItem>
+      </Form>
+      <div slot="footer">
+        <Button type="primary" size="large" long @click="numChanged">提交</Button>
+      </div>
+    </Modal>
+    <div style="margin-top: 15px">
+      <Button size="large" icon="ios-add" type="primary" @click="add = true">添加新书</Button>
+    </div>
+    <Modal v-model="add" title="新书信息" draggable>
+      <Form
+        :model="formBook"
+        label-position="left"
+        :label-width="80"
+      >
+        <FormItem label="编号">
+          <Input v-model="formBook.id" />
+        </FormItem>
+        <FormItem label="ISBN号">
+          <Input v-model="formBook.isbn" />
+        </FormItem>
+        <FormItem label="书名">
+          <Input v-model="formBook.name" />
+        </FormItem>
+        <FormItem label="作者">
+          <Input v-model="formBook.author" />
+        </FormItem>
+        <FormItem label="出版社">
+          <Input v-model="formBook.press" />
+        </FormItem>
+        <FormItem label="出版时间">
+          <Input v-model="formBook.prym" />
+        </FormItem>
+        <FormItem label="馆藏数">
+          <Input v-model="formBook.num" />
+        </FormItem>
+      </Form>
+      <div slot="footer">
+        <Button type="primary" @click="confirm" long>提交</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
 <script>
-import { getTotalbook } from "../../api/api";
+import { getTotalbook, editBookNum, addBook} from "../../api/api";
 
 export default {
   name: "bookManagement",
@@ -83,13 +128,65 @@ export default {
           width: 100
         }
       ],
-      data1: [{}]
+      data1: [{}],
+      modelEdit: false,
+      newNum: "",
+      editId: "",
+      add: false,
+      formBook: {
+        id: "",
+        isbn: "",
+        name: "",
+        author: "",
+        press: "",
+        prym: "",
+        num: ""
+      }
     };
   },
   methods: {
     async listAllBooks() {
       let flag = (await getTotalbook()).data;
       this.data1 = flag.data;
+    },
+    edit(row) {
+      this.modelEdit = true;
+      this.editId = row.BID;
+      console.log(row.BID);
+    },
+    async numChanged() {
+      console.log(this.newNum);
+      let flag = (await editBookNum(this.editId, this.newNum)).data;
+      if (flag.res === 0) {
+        this.$Notice.success({
+          title: flag.msg,
+          duration: 2
+        });
+        this.modelEdit = false;
+        location.reload();
+      } else {
+        this.$Notice.error({
+          title: flag.msg,
+          duration: 2
+        });
+      }
+    },
+    async confirm() {
+      let flag = (await addBook(this.formBook)).data;
+      if (flag.res === 0) {
+        this.$Notice.success({
+          title: flag.msg,
+          duration: 2
+        });
+        this.add = false;
+        location.reload();
+      } else {
+        this.$Notice.error({
+          title: flag.msg,
+          duration: 2
+        });
+      }
+      console.log(this.formBook);
     }
   },
   mounted() {

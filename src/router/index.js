@@ -11,6 +11,8 @@ import orderStatistics from "../components/user/orderStatistics";
 import personInfo from "../components/common/personInfo";
 import userManagement from "../components/manager/userManagement";
 import bookManagement from "../components/manager/bookManagement";
+import mBorrowManagement from "../components/manager/mBorrowManagement";
+import Statistics from "../components/manager/Statistics";
 
 Vue.use(VueRouter);
 
@@ -70,6 +72,16 @@ const routes = [
         path: "/bookManagement",
         name: "bookManagement",
         component: bookManagement
+      },
+      {
+        path: "/mBorrowManagement",
+        name: "mBorrowManagement",
+        component: mBorrowManagement
+      },
+      {
+        path: "/Statistics",
+        name: "Statistics",
+        component: Statistics
       }
     ]
   },
