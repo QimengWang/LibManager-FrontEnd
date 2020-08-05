@@ -5,6 +5,7 @@
     </span>
     <div class="infoBox" v-show="$store.state.userStatus === 'user'">
       <Dropdown @on-click="userClick">
+        <span>欢迎用户 </span>
         <a>
           <span>{{ name }}</span>
           <Icon type="ios-arrow-down" color="white" size="17"></Icon>
@@ -14,7 +15,7 @@
           <DropdownItem name="pwdChange">修改密码</DropdownItem>
         </DropdownMenu>
       </Dropdown>
-      <Modal v-model="modal" title="修改密码" footer-hide>
+      <Modal v-model="modal" title="修改密码" footer-hide draggable>
         <Form
           ref="formPwd"
           :model="formPwd"
@@ -43,8 +44,9 @@
     </div>
     <div class="infoBox" v-show="$store.state.userStatus === 'manager'">
       <Dropdown @on-click="userClick">
+        <span>管理员 </span>
         <a>
-          <span>{{ name }}</span>
+          <span> {{ name }} </span>
           <Icon type="ios-arrow-down" color="white" size="17"></Icon>
         </a>
         <DropdownMenu slot="list">

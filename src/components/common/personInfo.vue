@@ -54,7 +54,7 @@
             </div>
           </Card>
         </div>
-        <Modal v-model="modelTel" title="新电话号码">
+        <Modal v-model="modelTel" title="新手机号码" draggable width="300">
           <Form>
             <FormItem>
               <Input v-model="newTel" />
@@ -64,7 +64,7 @@
             <Button type="primary" size="large" long @click="telChanged">提交</Button>
           </div>
         </Modal>
-        <Modal v-model="modelEml" title="新邮箱地址">
+        <Modal v-model="modelEml" title="新邮箱地址" draggable width="300">
           <Form>
             <FormItem>
               <Input v-model="newEmail" />
