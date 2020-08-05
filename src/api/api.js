@@ -144,3 +144,26 @@ export function addBook(formBook) {
     BNUM: formBook.num
   });
 }
+
+export function mListBorrowed() {
+  return axios.get("/api/v1/book/in_return_time")
+}
+
+export function mListOverTime() {
+  return axios.get("/api/v1/book/beyond_return_time")
+}
+
+export function mReturnBook(cid, bid) {
+  return axios.post("/api/v1/manager/return_book", {
+    cid: cid,
+    bid: bid
+  });
+}
+
+export function userStatistic() {
+  return axios.get("/api/v1/client/statistic");
+}
+
+export function userBookStatistic() {
+  return axios.get("/api/v1/client_borrow/statistic");
+}
