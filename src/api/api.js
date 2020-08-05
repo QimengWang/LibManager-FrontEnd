@@ -122,8 +122,22 @@ export function changeEmail(id, Tel) {
   });
 }
 
+export function getTotalUsers() {
+  return axios.get("/api/v1/all/client");
+}
+
+export function addUser(formUser) {
+  return axios.post("/api/v1/add/client", {
+    CID: formUser.CID,
+    CNAME: formUser.CNAME,
+    CSEX: formUser.CSEX,
+    CAGE: formUser.CAGE,
+    CTEL: formUser.CTEL,
+    CEMAIL: formUser.CEMAIL
+  })
+}
 export function getTotalbook() {
-  return axios.get("/api/v1/get/all_book")
+  return axios.get("/api/v1/get/all_book");
 }
 
 export function editBookNum(id, num) {

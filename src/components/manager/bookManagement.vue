@@ -8,7 +8,7 @@
       <Table max-height="400" :columns="columns1" :data="data1">
         <template slot-scope="{ row }" slot="action">
           <Button type="primary" size="small" @click="edit(row)"
-            >修改数目</Button
+            >修改</Button
           >
         </template>
       </Table>
@@ -125,7 +125,7 @@ export default {
           slot: "action",
           align: "center",
           fixed: "right",
-          width: 100
+          width: 70
         }
       ],
       data1: [{}],
