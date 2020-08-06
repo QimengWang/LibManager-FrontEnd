@@ -31,6 +31,18 @@ export function getOrders(id) {
   return axios.get(`/api/v1/appointment/id?id=${id}`);
 }
 
+export function deleteOrder(data) {
+  return axios.delete("/api/v1/delete/appointment", { data: data});
+}
+
+export function timesStatistic(id) {
+  return axios.get(`/api/v1/num/statistic?id=${id}`);
+}
+
+export function orderTimeStatistic(id) {
+  return axios.get(`/api/v1/time/statistic?id=${id}`);
+}
+
 export function searchBook(type, bookValue) {
   return axios.post("/api/v1/search/book", {
     type: type,
